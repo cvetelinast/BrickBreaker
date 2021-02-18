@@ -1,0 +1,1 @@
+D:\MyDocuments\Cveti_Documents\FMI\Magistur_3_semestur\Rust\Project\BrickBreaker\target\debug\BrickBreaker.exe: D:\MyDocuments\Cveti_Documents\FMI\Magistur_3_semestur\Rust\Project\BrickBreaker\src\main.rs README.md docs\guides\GenerativeArt.md docs\guides\GenerativeArt.md.skt.md docs\guides\HelloGgez.md docs\guides\HelloGgez.md.skt.md

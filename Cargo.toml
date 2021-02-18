@@ -1,0 +1,12 @@
+[package]
+name = "brick_breaker"
+version = "0.1.0"
+authors = ["Cvetelina Stoyanova <cvetelinast.96@abv.bg>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+ggez = { git = "https://github.com/ggez/ggez", rev = "3183367f397aa46fade5912fe23b53ca68b55bb4" }
+nalgebra = "0.23.2"
+rand = "0.8.0"
