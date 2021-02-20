@@ -54,14 +54,19 @@ impl Ball {
         };
     }
 
-    pub fn update(
+    pub fn update(&mut self, point2: Point2<f32>) {
+        self.pos.x = point2.x;
+        self.pos.y = point2.y;
+    }
+
+    pub fn calculate_new_position(
         &mut self,
         seconds: f32,
         screen_width: f32,
         screen_height: f32,
         ball_width: f32,
         ball_height: f32,
-    ) {
+    ) -> Point2<f32> {
         let new_x = self.pos.x + Self::SPEED * seconds * self.direction.x;
         let new_y = self.pos.y + Self::SPEED * seconds * self.direction.y;
 
@@ -72,9 +77,7 @@ impl Ball {
         if new_y + ball_height > screen_height || new_y < 0.0 {
             self.direction.y = -self.direction.y;
         }
-
-        self.pos.x = new_x;
-        self.pos.y = new_y;
+        Point2 { x: new_x, y: new_y }
     }
 
     pub fn bounce(&mut self, collision: Collision) {
@@ -178,6 +181,16 @@ impl BricksWall {
         BricksWall { bricks }
     }
 
+    pub fn reset_on_game_over(&mut self) {
+        for brick in &mut self.bricks {
+            brick.reset();
+        }
+    }
+
+    pub fn all_bricks_are_broken(&mut self) -> bool {
+        self.broken_bricks_count() == self.bricks.len()
+    }
+
     pub fn update() {}
     pub fn draw(&self, ctx: &mut Context, assets: &Assets) -> GameResult<()> {
         for brick in &self.bricks {
@@ -261,6 +274,10 @@ impl Brick {
         };
         Ok(())
     }
+
+    pub fn reset(&mut self) {
+        self.state = BrickState::Survived;
+    }
 }
 
 #[derive(Debug)]
@@ -297,6 +314,7 @@ impl Skateboard {
             x: (max_right / 2.0) - (asset_size.width / 2.0),
             y: max_down - asset_size.height,
         };
+
         Skateboard {
             state: SkateboardState::Normal,
             pos: pos,

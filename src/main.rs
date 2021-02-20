@@ -1,5 +1,5 @@
 use brick_breaker::assets::Assets;
-use brick_breaker::event_handler_wrapper::EventHandlerWrapper;
+use brick_breaker::event_handler_wrapper::{EventHandlerWrapper, SCORE_FILE_NAME};
 use ggez::conf::{Conf, WindowMode};
 use ggez::event::{self};
 use ggez::input;
@@ -7,8 +7,6 @@ use ggez::timer;
 use ggez::{graphics, Context, ContextBuilder, GameError, GameResult};
 use std::fs::File;
 use std::io::{self, BufRead};
-
-static SCORE_FILE_NAME: &str = "score.txt";
 
 fn main() -> GameResult {
     let conf = Conf::new().window_mode(WindowMode {
@@ -25,7 +23,7 @@ fn main() -> GameResult {
 
     graphics::set_window_title(&ctx, "Brick breaker");
 
-    let main_state = MainState::new(&mut ctx, &conf).unwrap();
+    let main_state = MainState::new(&mut ctx, conf).unwrap();
     event::run(ctx, event_loop, main_state);
 }
 
@@ -34,7 +32,7 @@ struct MainState {
 }
 
 impl MainState {
-    pub fn new(_ctx: &mut Context, conf: &Conf) -> GameResult<MainState> {
+    pub fn new(_ctx: &mut Context, conf: Conf) -> GameResult<MainState> {
         match read_lines(String::from(SCORE_FILE_NAME)) {
             Ok(lines) => {
                 let x = lines.map(|x| x.unwrap()).collect::<Vec<String>>();
@@ -54,11 +52,14 @@ impl MainState {
 
     pub fn initialize_main_state(
         ctx: &mut Context,
-        conf: &Conf,
+        conf: Conf,
         lines: Vec<String>,
     ) -> GameResult<MainState> {
         let assets = Assets::new(ctx)?;
-        let e = EventHandlerWrapper::new(conf, lines, assets);
+        let level = lines[0].parse::<i32>().unwrap();
+        let max_score = lines[1].parse::<usize>().unwrap();
+
+        let e = EventHandlerWrapper::new(conf, assets, level, max_score);
 
         return Ok(MainState {
             event_handler_wrapper: e,

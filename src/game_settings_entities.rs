@@ -1,6 +1,8 @@
 use crate::assets::{Assets, Sprite, TextSprite};
+use crate::game_workflow_state_reducer::GameWorkflowState;
 use ggez::mint::Point2;
 use ggez::{Context, GameResult};
+use std::clone::Clone;
 
 #[derive(Debug, Default)]
 pub struct InputState {
@@ -13,6 +15,7 @@ pub struct ScreenSize {
     pub screen_height: f32,
 }
 
+#[derive(Debug)]
 pub struct GameSettingsState {
     pub assets: Assets,
     pub input: InputState,
@@ -20,16 +23,13 @@ pub struct GameSettingsState {
     pub score_details: ScoreDetails,
 }
 
+#[derive(Debug)]
 pub struct ScoreDetails {
     pub game_workflow_state: GameWorkflowState,
     pub score: Score,
 }
 
-pub enum GameWorkflowState {
-    PlayLevel,
-    ShowEnd,
-}
-
+#[derive(Debug, Copy, Clone)]
 pub struct Score {
     pub score_result: usize,
     pub level: i32,
@@ -45,7 +45,7 @@ impl ScoreDetails {
         };
 
         ScoreDetails {
-            game_workflow_state: GameWorkflowState::PlayLevel,
+            game_workflow_state: GameWorkflowState::NextLevel,
             score: score,
         }
     }

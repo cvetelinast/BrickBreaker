@@ -1,9 +1,9 @@
-use ggez::audio;
 use ggez::graphics;
 use ggez::mint::Point2;
 use ggez::{Context, GameResult};
 use std::fmt::Debug;
 
+#[derive(Debug)]
 pub struct Assets {
     pub brick_survived: graphics::Image,
     pub brick_touched: graphics::Image,
@@ -14,11 +14,11 @@ pub struct Assets {
 
 impl Assets {
     pub fn new(ctx: &mut Context) -> GameResult<Assets> {
-       let brick_survived = graphics::Image::new(ctx, "/brick_survived.png")?;
-       let brick_touched = graphics::Image::new(ctx, "/brick_touched.png")?;
-       let skateboard_normal = graphics::Image::new(ctx, "/skateboard_normal_1.png")?;
-       let skateboard_rebound = graphics::Image::new(ctx, "/skateboard_rebound.png")?;
-       let ball_flying = graphics::Image::new(ctx, "/ball_flying.png")?;
+        let brick_survived = graphics::Image::new(ctx, "/brick_survived.png")?;
+        let brick_touched = graphics::Image::new(ctx, "/brick_touched.png")?;
+        let skateboard_normal = graphics::Image::new(ctx, "/skateboard_normal_1.png")?;
+        let skateboard_rebound = graphics::Image::new(ctx, "/skateboard_rebound.png")?;
+        let ball_flying = graphics::Image::new(ctx, "/ball_flying.png")?;
 
         Ok(Assets {
             brick_survived,
@@ -52,12 +52,20 @@ impl TextSprite {
 
 impl Sprite for TextSprite {
     fn draw(&mut self, top_left: Point2<f32>, ctx: &mut Context) -> GameResult<()> {
-        graphics::draw(ctx, &self.text, graphics::DrawParam {
-            dest: top_left,
-            .. Default::default()
-        })
+        graphics::draw(
+            ctx,
+            &self.text,
+            graphics::DrawParam {
+                dest: top_left,
+                ..Default::default()
+            },
+        )
     }
 
-    fn width(&self, ctx: &mut Context) -> f32 { self.text.width(ctx) }
-    fn height(&self, ctx: &mut Context) -> f32 { self.text.height(ctx) }
+    fn width(&self, ctx: &mut Context) -> f32 {
+        self.text.width(ctx)
+    }
+    fn height(&self, ctx: &mut Context) -> f32 {
+        self.text.height(ctx)
+    }
 }
