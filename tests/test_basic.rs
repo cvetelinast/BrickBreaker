@@ -28,7 +28,7 @@ fn test_math_collisions() {
 fn test_ball_initialization() {
     let actual_ball = Ball::new(200.0, 100.0, 60.0, 10.0, 10.0);
     assert!(matches!(actual_ball.state, BallState::Flying));
-    assert_eq!(actual_ball.pos, Point2 { x: 95.0, y: 30.0 });
+    assert_eq!(actual_ball.pos, Point2 { x: 95.0, y: 20.0 });
     assert_eq!(actual_ball.direction, Point2 { x: 1.0, y: 1.0 });
     assert_eq!(actual_ball.radius, 5.0);
 
@@ -38,7 +38,7 @@ fn test_ball_initialization() {
         actual_ball_2.pos,
         Point2 {
             x: 420.0,
-            y: 2414.0
+            y: 2404.0
         }
     );
     assert_eq!(actual_ball_2.direction, Point2 { x: 1.0, y: 1.0 });

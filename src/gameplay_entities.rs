@@ -33,6 +33,7 @@ pub enum BallState {
 
 impl Ball {
     pub const SPEED: f32 = 350.0;
+    pub const INITIAL_OFFSET: f32 = 10.0;
 
     pub fn new(
         screen_width: f32,
@@ -43,7 +44,7 @@ impl Ball {
     ) -> Self {
         let ball_pos = Point2 {
             x: screen_width / 2.0 - ball_width / 2.0,
-            y: screen_height - skateboard_height - ball_height,
+            y: screen_height - skateboard_height - ball_height - Self::INITIAL_OFFSET,
         };
 
         return Ball {

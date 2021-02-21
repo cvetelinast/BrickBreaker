@@ -202,7 +202,10 @@ impl EventHandlerWrapper {
                 self.game_settings_state.score_details.game_workflow_state,
                 GameWorkflowIntent::GoToHomePage,
             ) {
-                Ok(state) => self.game_settings_state.score_details.game_workflow_state = state,
+                Ok(state) => {
+                    self.reset(self.game_settings_state.score_details.score.level);
+                    self.game_settings_state.score_details.game_workflow_state = state;
+                }
                 Err(e) => println!("State reducer error: {:?} ", e),
             },
             _ => (),
@@ -211,7 +214,6 @@ impl EventHandlerWrapper {
 
     pub fn on_game_over(&mut self) {
         let level = self.game_settings_state.score_details.score.level;
-        self.reset(level);
         let max_score = self
             .game_settings_state
             .score_details
